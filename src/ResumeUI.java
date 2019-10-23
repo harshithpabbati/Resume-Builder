@@ -1,5 +1,7 @@
+import java.util.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.io.File;
 import java.awt.*;
 
 public class ResumeUI extends JFrame implements ActionListener {
@@ -7,6 +9,7 @@ public class ResumeUI extends JFrame implements ActionListener {
 	public JTextField t1,t2,t3,t4,t5,t6;
 	public JButton b1,b2;
 	public Font f;
+	public String ImagePath;
 	
 	public ResumeUI() {
 		f = new Font("SansSerif", Font.BOLD, 20);
@@ -43,7 +46,7 @@ public class ResumeUI extends JFrame implements ActionListener {
 		t5.setBounds(200,250,200,40);
 		t6.setBounds(200,290,200,40);
 		b1.setBounds(600,400,130,50);
-		b2.setBounds(490, 320, 90,20);
+		b2.setBounds(490, 320, 110,30);
 		add(l);
 		add(l1);
 		add(l2);
@@ -61,6 +64,7 @@ public class ResumeUI extends JFrame implements ActionListener {
 		add(b1);
 		add(b2);
 		b1.addActionListener(this);
+		b2.addActionListener(this);
 		setLayout(null);
 		setVisible(true);
 		setSize(800,500);
@@ -69,6 +73,17 @@ public class ResumeUI extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		new EducationUI();
+		if((e.getSource())==b1) {
+			new EducationUI(t1.getText(),t2.getText(),t3.getText(),t4.getText(),t5.getText(),t6.getText(),this.ImagePath);
+		}
+		else{
+			FileBrowser f = new FileBrowser();
+			if(f.getAbsolutePath()!=null) {
+				this.ImagePath=f.getAbsolutePath();
+				ImageIcon icon = new ImageIcon(f.getAbsolutePath());
+				Image scaleImage = icon.getImage().getScaledInstance(200, 200,Image.SCALE_DEFAULT);
+				l8.setIcon(new ImageIcon(scaleImage));
+			}
+		}
 	}
 }
